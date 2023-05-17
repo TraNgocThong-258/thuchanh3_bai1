@@ -1,0 +1,34 @@
+package th3;
+
+/**
+ *
+ * @author trang
+ */
+public class OrderDetail {
+    private int quatity;
+    private product product;
+
+    public OrderDetail(int quatity, product product) {
+        this.quatity = quatity;
+        this.product = product;
+    }
+
+    public int getQuatity() {
+        return quatity;
+    }
+
+    public void setQuatity(int quatity) {
+        this.quatity = quatity;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderDetail{" + "quatity=" + quatity + ", product=" + product + '}';
+    }
+    public double calcTotalPrice (){
+        double thanhtien;
+        thanhtien = quatity * product.getPrice();
+        return thanhtien;
+    }
+    
+}
