@@ -1,0 +1,81 @@
+package th3;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+
+public class Order {
+    private int orderID;
+    private LocalDate orderDate;
+    private List<OrderDetail> lineiteams = new ArrayList<>() ;
+    private int count;
+    OrderDetail ord;
+    product pro = new product();
+    OrderDetail detail = new OrderDetail (count, pro);
+
+    Scanner sc = new Scanner ( System.in);
+
+    public Order() {
+    }
+
+    public Order(int orderID, LocalDate orderDate, List<OrderDetail> lineiteams, int count) {
+        this.orderID = orderID;
+        this.orderDate = orderDate;
+        this.lineiteams = new ArrayList<>();
+        this.count = 0;
+    }
+
+    public int getOrderID() {
+        return orderID;
+    }
+
+    public LocalDate getOrderDate() {
+        return orderDate;
+    }
+
+    public List<OrderDetail> getLineiteams() {
+        return lineiteams;
+    }
+public void addLineItem(product p, int quatity)  {
+    if (count < 20){
+        lineiteams.add(new OrderDetail(quatity, p));
+        count++;
+    }
+    else {
+        System.out.println("toi da 20 san pham cho mot hoa don");
+    }
+  
+}  
+public double calcTotalCharge() {
+    double tonghd = 0.0;
+    for (OrderDetail item : lineiteams) {
+        tonghd += item.calcTotalPrice ();
+    }
+    return tonghd;
+}
+    
+    public void nhap (){
+        sc.nextLine();
+        System.out.println("nhap ma san pham "); String productID = sc.nextLine();
+        System.out.println("nhap mo ta san pham"); String description = sc.nextLine();
+        System.out.println("nhap gia san pham "); double price = sc.nextDouble();
+        System.out.println("Nhap so luong"); int quatity = sc.nextInt();
+        
+        pro = new product(description, productID, price);
+        addLineItem(pro, quatity);
+        
+        
+    }
+    public void in (){
+        System.out.println("ma hoa don: " +orderID); 
+        System.out.println("Ngay: " +orderDate);
+        System.out.println(String.format("|%-20s|%-20s|%-20s|%-20s|%-20s", "Ma san pham", "Mo ta san pham", "Gia san pham", "So luong", "Thanh tien"));
+        System.out.println("=======================================================================================");
+        for (OrderDetail lineiteam : lineiteams) {
+            System.out.println(String.format("|%-20s|%-20s|%-20s|%-20s|%-20s", pro.getProductID(), pro.getDescription(), pro.getPrice(), lineiteam.getQuatity(), lineiteam.calcTotalPrice()));
+        }
+        System.out.println("Tong hoa don: "); System.out.println(calcTotalCharge());
+    }
+}
